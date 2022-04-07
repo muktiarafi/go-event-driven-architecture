@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ticketing-payments-deployment
+  name: ticketing-expiration-deployment
 spec:
   selector:
     matchLabels:
-      app: ticketing-payments
+      app: ticketing-expiration
   template:
     metadata:
       labels:
-        app: ticketing-payments
+        app: ticketing-expiration
     spec:
       containers:
-        - name: ticketing-payments
-          image: muktiarafi/ticketing-payments-distroless
+        - name: ticketing-expiration
+          image: muktiarafi/ticketing-expiration-distroless
           ports:
             - containerPort: 8080
               name: http-web
