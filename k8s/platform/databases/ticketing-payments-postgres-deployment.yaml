@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticketing-payments-postgres-deployment
+spec:
+  selector:
+    matchLabels:
+      app: ticketing-payments-postgres
+  template:
+    metadata:
+      labels:
+        app: ticketing-payments-postgres
+    spec:
+      containers:
+        - name: ticketing-payments-postgres
+          image: postgres:alpine
+          ports:
+            - containerPort: 5432
+              name: tcp-connection
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+              # valueFrom:
+              #   secretKeyRef:
+              #     key: dbuser
+              #     name: ticketing-payments-postgres-secret
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: dbpassword
+                  name: ticketing-payments-postgres-secret
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  key: dbname
+                  name: ticketing-payments-postgres-secret
