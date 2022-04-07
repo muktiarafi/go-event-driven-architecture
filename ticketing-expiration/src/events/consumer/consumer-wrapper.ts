@@ -24,6 +24,7 @@ class ConsumerWrapper {
         const delay =
           new Date(orderCreatedData.expiresAt).getTime() - new Date().getTime();
 
+        console.log('expiration for ticket id', orderCreatedData.ticketId)
         console.log('received event from topic:', 'order-created');
         console.log('current offset:', message.offset);
         console.log('current delay', delay);
