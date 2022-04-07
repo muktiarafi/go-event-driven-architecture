@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: ticketing-auth
-          image: muktiarafi/ticketing-auth
+          image: muktiarafi/ticketing-auth-distroless
           ports:
             - containerPort: 8080
               name: http-web

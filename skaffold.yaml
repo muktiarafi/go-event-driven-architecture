@@ -2,20 +2,6 @@ apiVersion: skaffold/v2beta28
 kind: Config
 metadata:
   name: ticketing
-build:
-  artifacts:
-  - image: muktiarafi/ticketing-auth
-    context: ticketing-auth
-    docker:
-      dockerfile: Dockerfile
-  - image: muktiarafi/ticketing-orders
-    context: ticketing-orders
-    docker:
-      dockerfile: Dockerfile
-  - image: muktiarafi/ticketing-tickets
-    context: ticketing-tickets
-    docker:
-      dockerfile: Dockerfile
 deploy:
   kubectl:
     manifests:
