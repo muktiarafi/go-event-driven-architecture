@@ -111,7 +111,7 @@ func (r *TicketRepositoryImpl) Update(ticket *entity.Ticket) (*entity.Ticket, er
 	defer cancel()
 
 	stmt := `UPDATE tickets 
-	SET title=$1, price=$2, order_id=$3 version=$4
+	SET title=$1, price=$2, order_id=$3, version=$4
 	WHERE id = $5 AND version =$6
 	RETURNING *`
 
