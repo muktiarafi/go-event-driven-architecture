@@ -79,7 +79,7 @@ func (s *PaymentServiceImpl) Create(token string, userID, orderID int64) (*entit
 	}
 	newPayment.Order = updatedOrder
 
-	if err := s.PaymentProducer.Created(payment); err != nil {
+	if err := s.PaymentProducer.Created(newPayment); err != nil {
 		return nil, err
 	}
 
