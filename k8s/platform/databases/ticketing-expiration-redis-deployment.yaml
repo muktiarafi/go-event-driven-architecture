@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticketing-expiration-redis-deployment
+spec:
+  selector:
+    matchLabels:
+      app: ticketing-expiration-redis
+  template:
+    metadata:
+      labels:
+        app: ticketing-expiration-redis
+    spec:
+      containers:
+        - name: ticketing-payments-postgres
+          image: redis:alpine
+          ports:
+            - containerPort: 6379
+              name: tcp-connection

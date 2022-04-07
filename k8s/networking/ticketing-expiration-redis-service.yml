@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketing-expiration-redis-service
+spec:
+  type: ClusterIP
+  selector:
+    app: ticketing-redis-postgres
+  ports:
+    - port: 6379
+      name: tcp-connection
+      targetPort: tcp-connection
+      protocol: TCP
