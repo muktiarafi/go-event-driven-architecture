@@ -65,6 +65,7 @@ func (s *PaymentServiceImpl) Create(token string, userID, orderID int64) (*entit
 
 	payment := &entity.Payment{
 		StripeID: charge.ID,
+		Order:    order,
 	}
 	newPayment, err := s.PaymentRepository.Insert(payment)
 	if err != nil {
