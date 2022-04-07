@@ -108,7 +108,7 @@ func (s *OrderServiceImpl) Update(userID, orderID int64) (*entity.Order, error) 
 		}
 	}
 	order.Status = constant.CANCELLED
-
+	order.Version++
 	updatedOrder, err := s.OrderRepository.Update(order)
 	if err != nil {
 		return nil, err
