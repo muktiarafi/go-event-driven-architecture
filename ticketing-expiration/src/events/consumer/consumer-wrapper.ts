@@ -37,6 +37,8 @@ class ConsumerWrapper {
             delay,
           }
         );
+
+        console.log("done")
       },
     });
   }
