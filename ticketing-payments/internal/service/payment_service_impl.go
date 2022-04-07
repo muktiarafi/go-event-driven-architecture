@@ -72,8 +72,7 @@ func (s *PaymentServiceImpl) Create(token string, userID, orderID int64) (*entit
 		return nil, err
 	}
 	order.Status = "COMPLETED"
-	order.Version++
-	updatedOrder, err := s.OrderRepository.Update(order)
+	updatedOrder, err := s.OrderRepository.UpdateOrderComplete(order)
 	if err != nil {
 		return nil, err
 	}

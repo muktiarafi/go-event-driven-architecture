@@ -114,3 +114,39 @@ func (r *OrderRepositoryImpl) Update(order *entity.Order) (*entity.Order, error)
 
 	return updatedOrder, nil
 }
+
+func (r *OrderRepositoryImpl) UpdateOrderComplete(order *entity.Order) (*entity.Order, error) {
+	ctx, cancel := newDBContext()
+	defer cancel()
+
+	stmt := `UPDATE orders
+	SET status = $1
+	WHERE id = $2
+	RETURNING *`
+
+	updatedOrder := new(entity.Order)
+	if err := r.SQL.QueryRowContext(
+		ctx,
+		stmt,
+		order.Status,
+		order.ID,
+	).Scan(
+		&updatedOrder.ID,
+		&updatedOrder.Price,
+		&updatedOrder.Status,
+		&updatedOrder.UserID,
+		&updatedOrder.Version,
+	); err != nil {
+		if err == sql.ErrNoRows {
+			return nil, &common.Error{
+				Code:    common.ECONCLICT,
+				Op:      "OrderRepositoryImpl.Update",
+				Message: "Order is out of sync",
+				Err:     err,
+			}
+		}
+		return nil, &common.Error{Op: "OrderRepositoryImpl.Update", Err: err}
+	}
+
+	return updatedOrder, nil
+}
