@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticketing-tickets-deployment
+spec:
+  selector:
+    matchLabels:
+      app: ticketing-tickets
+  template:
+    metadata:
+      labels:
+        app: ticketing-tickets
+    spec:
+      containers:
+        - name: ticketing-tickets
+          image: muktiarafi/ticketing-tickets
+          ports:
+            - containerPort: 8080
+              name: http-web
+          env:
+            - name: DB_HOST
+              value: ticketing-tickets-postgres-service.default.svc.cluster.local
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  key: dbname
+                  name: ticketing-tickets-container-secret
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: dbuser
+                  name: ticketing-tickets-container-secret
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: dbpassword
+                  name: ticketing-tickets-container-secret
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: jwtkey
+                  name: ticketing-jwt-secret
+            - name: PRODUCER_HOST
+              value: my-release-kafka-headless
+            - name: PRODUCER_PORT
+              value: "9092"
+            - name: CONSUMER_HOST
+              value: my-release-kafka
+            - name: CONSUMER_PORT
+              value: "9092"

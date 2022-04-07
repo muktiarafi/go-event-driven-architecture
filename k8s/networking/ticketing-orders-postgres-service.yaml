@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketing-orders-postgres-service
+spec:
+  type: ClusterIP
+  selector:
+    app: ticketing-orders-postgres
+  ports:
+    - port: 5432
+      name: tcp-connection
+      targetPort: tcp-connection
+      protocol: TCP

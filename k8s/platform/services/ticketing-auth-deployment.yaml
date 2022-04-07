@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticketing-auth-deployment
+spec:
+  selector:
+    matchLabels:
+      app: ticketing-auth
+  template:
+    metadata:
+      labels:
+        app: ticketing-auth
+    spec:
+      containers:
+        - name: ticketing-auth
+          image: muktiarafi/ticketing-auth
+          ports:
+            - containerPort: 8080
+              name: http-web
+          env:
+            - name: DB_HOST
+              value: ticketing-auth-postgres-service
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  key: dbname
+                  name: ticketing-auth-container-secret
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: dbuser
+                  name: ticketing-auth-container-secret
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: dbpassword
+                  name: ticketing-auth-container-secret
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: jwtkey
+                  name: ticketing-jwt-secret

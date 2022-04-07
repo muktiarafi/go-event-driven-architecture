@@ -1,0 +1,37 @@
+apiVersion: skaffold/v2beta28
+kind: Config
+metadata:
+  name: ticketing
+build:
+  artifacts:
+  - image: muktiarafi/ticketing-auth
+    context: ticketing-auth
+    docker:
+      dockerfile: Dockerfile
+  - image: muktiarafi/ticketing-orders
+    context: ticketing-orders
+    docker:
+      dockerfile: Dockerfile
+  - image: muktiarafi/ticketing-tickets
+    context: ticketing-tickets
+    docker:
+      dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+    - k8s/networking/ticketing-auth-postgres-service.yaml
+    - k8s/networking/ticketing-auth-service.yaml
+    - k8s/networking/ticketing-orders-postgres-service.yaml
+    - k8s/networking/ticketing-orders-service.yaml
+    - k8s/networking/ticketing-tickets-postgres.yaml
+    - k8s/networking/ticketing-tickets-service.yaml
+    - k8s/platform/databases/ticketing-auth-postgres-deployment.yaml
+    - k8s/platform/databases/ticketing-orders-postgres-deployment.yaml
+    - k8s/platform/databases/ticketing-tickets-postgres-deployment.yml
+    - k8s/platform/secrets/jwt-secret.yaml
+    - k8s/platform/secrets/ticketing-auth-secret.yaml
+    - k8s/platform/secrets/ticketing-orders-secret.yaml
+    - k8s/platform/secrets/ticketing-tickets-secret.yaml
+    - k8s/platform/services/ticketing-auth-deployment.yaml
+    - k8s/platform/services/ticketing-orders-deployment.yaml
+    - k8s/platform/services/ticketing-tickets-deployment.yaml

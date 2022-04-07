@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticketing-auth-postgres-deployment
+spec:
+  selector:
+    matchLabels:
+      app: ticketing-auth-postgres
+  template:
+    metadata:
+      labels:
+        app: ticketing-auth-postgres
+    spec:
+      containers:
+        - name: ticketing-auth-postgres
+          image: postgres:alpine
+          ports:
+            - containerPort: 5432
+              name: tcp-connection
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+              # valueFrom:
+              #   secretKeyRef:
+              #     key: dbuser
+              #     name: ticketing-auth-postgres-secret
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: dbpassword
+                  name: ticketing-auth-postgres-secret
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  key: dbname
+                  name: ticketing-auth-postgres-secret
