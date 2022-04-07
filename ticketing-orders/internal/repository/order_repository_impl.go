@@ -231,7 +231,7 @@ func (r *OrderRepositoryImpl) Update(order *entity.Order) (*entity.Order, error)
 	RETURNING id, status, expires_at, user_id, version`
 
 	updatedOrder := new(entity.Order)
-	if err := r.SQL.QueryRowContext(ctx, stmt, order.Status, order.Version+1, order.ID).Scan(
+	if err := r.SQL.QueryRowContext(ctx, stmt, order.Status, order.Version, order.ID).Scan(
 		&updatedOrder.ID,
 		&updatedOrder.Status,
 		&updatedOrder.ExpiresAt,
