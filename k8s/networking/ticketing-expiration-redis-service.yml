@@ -5,7 +5,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: ticketing-redis-postgres
+    app: ticketing-expiration-redis
   ports:
     - port: 6379
       name: tcp-connection
